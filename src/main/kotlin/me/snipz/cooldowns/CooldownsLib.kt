@@ -1,14 +1,10 @@
 package me.snipz.cooldowns
 
-import me.snipz.cooldowns.builder.CooldownTemplateBuilder
+import me.snipz.cooldowns.api.service.ICooldownService
 import me.snipz.cooldowns.builder.general.CooldownBuilder
-import net.kyori.adventure.text.Component
 import net.milkbowl.vault.permission.Permission
-import org.bukkit.Bukkit
-import org.bukkit.entity.Player
+import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
-import kotlin.time.Duration.Companion.minutes
-import kotlin.time.Duration.Companion.seconds
 
 object CooldownsLib {
 
@@ -28,17 +24,15 @@ object CooldownsLib {
             }
         }
 
-        val player: Player = Bukkit.getPlayer("")!!
-
-        val cooldown = CooldownTemplateBuilder()
-            .key("feed_cooldown_self")
-            .duration(1.minutes)
-            .group("vip", 30.seconds)
-            .group("premium", 15.seconds)
-            .build()
+        val storage = CooldownsStorage(plugin)
+        plugin.server.servicesManager.register(
+            ICooldownService::class.java,
+            CooldownServiceImpl(storage),
+            plugin,
+            ServicePriority.High
+        )
 
         initialized = true
     }
 
-    fun String.toComponent() = Component.text(this)
 }
