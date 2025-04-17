@@ -24,7 +24,7 @@ class CooldownTemplateBuilder : CooldownBuilder<CooldownTemplateBuilder>() {
                 val expires = System.currentTimeMillis() + time.inWholeMilliseconds
                 return AppliedCooldownBuilder()
                     .key(key ?: "error")
-                    .duration(duration)
+                    .duration(time)
                     .expires(expires)
                     .player(player.name)
                     .build()
