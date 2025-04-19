@@ -37,7 +37,7 @@ class CooldownsStorage(private val plugin: Plugin) {
     }
 
     fun hasPlayerCooldown(player: Player, key: String): Boolean {
-        if (Bukkit.isPrimaryThread())
+        if (!Bukkit.isPrimaryThread())
             throw IllegalStateException("Cooldowns can only be used in main thread...")
 
         return list.any {
@@ -48,7 +48,7 @@ class CooldownsStorage(private val plugin: Plugin) {
     }
 
     fun applyCooldown(player: Player, key: String) {
-        if (Bukkit.isPrimaryThread())
+        if (!Bukkit.isPrimaryThread())
             throw IllegalStateException("Cooldowns can only be used in main thread...")
 
         cooldowns[key]?.let { cooldown ->
@@ -58,7 +58,7 @@ class CooldownsStorage(private val plugin: Plugin) {
     }
 
     fun getLeftCooldown(player: Player, key: String): Duration {
-        if (Bukkit.isPrimaryThread())
+        if (!Bukkit.isPrimaryThread())
             throw IllegalStateException("Cooldowns can only be used in main thread...")
 
         val active = list.filter { it.getKey() == key && it.getPlayer() == player.name && !it.hasExpired() }
@@ -68,14 +68,14 @@ class CooldownsStorage(private val plugin: Plugin) {
     }
 
     fun registerCooldown(cooldown: ICooldownTemplate) {
-        if (Bukkit.isPrimaryThread())
+        if (!Bukkit.isPrimaryThread())
             throw IllegalStateException("Cooldowns can only be used in main thread...")
 
         cooldowns[cooldown.getKey()] = cooldown
     }
 
     fun getCooldown(key: String): ICooldownTemplate? {
-        if (Bukkit.isPrimaryThread())
+        if (!Bukkit.isPrimaryThread())
             throw IllegalStateException("Cooldowns can only be used in main thread...")
 
         return cooldowns[key]
