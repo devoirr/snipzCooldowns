@@ -25,6 +25,8 @@ object CooldownsLib {
         }
 
         val storage = CooldownsStorage(plugin)
+        storage.startCleaning()
+
         plugin.server.servicesManager.register(
             ICooldownService::class.java,
             CooldownServiceImpl(storage),

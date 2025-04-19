@@ -19,7 +19,7 @@ class CooldownsStorage(private val plugin: Plugin) {
 
     private var currentTask: BukkitTask? = null
 
-    private fun startCleaning() {
+    fun startCleaning() {
         if (currentTask != null)
             return
 
@@ -31,7 +31,7 @@ class CooldownsStorage(private val plugin: Plugin) {
         }.runTaskTimer(plugin, 0L, 20L * 60 * 3)
     }
 
-    private fun stopCleaning() {
+    fun stopCleaning() {
         currentTask?.cancel()
         currentTask = null
     }
