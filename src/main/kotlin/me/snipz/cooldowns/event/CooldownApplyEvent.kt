@@ -6,7 +6,7 @@ import org.bukkit.event.Cancellable
 import org.bukkit.event.Event
 import org.bukkit.event.HandlerList
 
-class CooldownApplyEvent(private val player: Player, cooldown: ICooldown) : Event(), Cancellable {
+class CooldownApplyEvent(val player: Player, val cooldown: ICooldown) : Event(), Cancellable {
 
     private var cancel = false
 
