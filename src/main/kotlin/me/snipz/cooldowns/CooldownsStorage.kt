@@ -53,7 +53,8 @@ class CooldownsStorage(private val plugin: Plugin) {
 
         cooldowns[key]?.let { cooldown ->
             val applied = cooldown.apply(player)
-            list.add(applied)
+            if (applied != null)
+                list.add(applied)
         }
     }
 
